@@ -1,26 +1,17 @@
-const mysql = require("mysql2");
+const { Sequelize } = require("sequelize");
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
-
-// Optional test query
-pool.query("SELECT 1", (err) => {
-  if (err) {
-    console.error("MySQL connection failed:", err.message);
-  } else {
-    console.log("MySQL Connected");
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: "mysql",
+    logging: false,
   }
-});
+);
 
-module.exports = pool.promise();
-
+module.exports = sequelize;
 
 // In production APIs, we use mysql2.createPool() instead of createConnection()
 // because pool handles multiple concurrent requests efficiently and automatically manages connections.

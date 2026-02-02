@@ -1,53 +1,33 @@
-const bcrypt = require("bcryptjs");
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
 
-module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("users", {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true
-      }
-    },
-
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-
-    role: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      defaultValue: "user"
-    }
+const User = sequelize.define("users", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+},
   {
-    timestamps: true,
+    timestamps: false   // <--- Add this
+  }
+);
 
-    // Hash password automatically
-    hooks: {
-      beforeCreate: async (user) => {
-        user.password = await bcrypt.hash(user.password, 10);
-      },
-      beforeUpdate: async (user) => {
-        if (user.changed("password")) {
-          user.password = await bcrypt.hash(user.password, 10);
-        }
-      }
-    }
-  });
-
-  return User;
-};
+module.exports = User;
