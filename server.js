@@ -11,7 +11,15 @@ const authRoutes = require('./routes/auth');
 const videoRoutes = require('./routes/videoRoutes');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:4200",
+    "https://your-netlify-app.netlify.app"
+  ],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(bodyParser.json());
 
 app.use("/api/giminiAiphoto", giminiAiphotoRoutes);
