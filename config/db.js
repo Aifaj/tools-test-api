@@ -21,16 +21,18 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,   // ✅ important
+    port: process.env.DB_PORT,
     dialect: "mysql",
-    logging: false,
-    dialectOptions: {
-      connectTimeout: 60000, // optional but good for Railway
-    },
+    logging: console.log,
   }
 );
 
+sequelize.authenticate()
+  .then(() => console.log("MySQL Connected Successfully"))
+  .catch(err => console.error("DB Connection Error:", err, "Host:", process.env.DB_HOST, "Port:", process.env.DB_PORT));
+
 module.exports = sequelize;
+
 
 // In production APIs, we use mysql2.createPool() instead of createConnection()
 // because pool handles multiple concurrent requests efficiently and automatically manages connections.
