@@ -13,8 +13,7 @@ const videoRoutes = require('./routes/videoRoutes');
 const app = express();
 app.use(cors({
   origin: [
-    "http://localhost:4200",
-    "https://your-netlify-app.netlify.app"
+    "http://localhost:4200"
   ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -26,6 +25,10 @@ app.use("/api/giminiAiphoto", giminiAiphotoRoutes);
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/video', videoRoutes);
+
+app.get("/", (req, res) => {
+  res.send("API is working");
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
