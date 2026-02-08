@@ -13,7 +13,8 @@ const videoRoutes = require('./routes/videoRoutes');
 const app = express();
 app.use(cors({
   origin: [
-    "http://localhost:4200"
+    "http://localhost:4200",
+    "https://editorimageai.netlify.app"
   ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
