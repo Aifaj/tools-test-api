@@ -1,0 +1,10 @@
+const scController = require('../controllers/userStudentClassController');
+const express = require('express');
+const router = express.Router();
+
+
+router.get('/getAllStudent', scController.getAllStudent);
+router.get('/getStudentClassView', scController.getStudentClassView);
+router.get('/getSCByProcedure', scController.getSCByProcedure);
+
+module.exports = router;

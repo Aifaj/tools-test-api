@@ -10,6 +10,8 @@ const userRoutes = require('./routes/userroutes');
 const authRoutes = require('./routes/auth');
 const videoRoutes = require('./routes/videoRoutes');
 
+const studentClass = require('./routes/studentClass');
+
 const app = express();
 app.use(cors({
   origin: [
@@ -26,6 +28,7 @@ app.use("/api/giminiAiphoto", giminiAiphotoRoutes);
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/video', videoRoutes);
+app.use('/studentClass', studentClass);
 
 app.get("/", (req, res) => {
   res.send("API is working");
