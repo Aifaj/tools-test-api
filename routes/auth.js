@@ -1,16 +1,13 @@
 const router = require("express").Router();
-const { register, login } = require("../controllers/authController");
-const { verifyToken, isAdmin } = require("../middleware/auth");
+const authControler = require("../controllers/authController");
+const authMid = require("../middleware/auth");
 
-router.post("/register", register);
-router.post("/login", login);
+router.post("/register", authControler.register);
+router.post("/login", authControler.login);
+router.post("/logout", authControler.logout);
+router.post("/refreshToken", authControler.refreshToken)
 
-router.get("/profile", verifyToken, (req, res) => {
-  res.json({ success: true, user: req.user });
-});
-
-router.get("/admin", verifyToken, isAdmin, (req, res) => {
-  res.json({ success: true, msg: "Welcome Admin" });
-});
+router.get("/admins", authMid.verifyToken, authMid.isAdmin, authControler.getAdmins);
+router.get("/users", authMid.verifyToken, authMid.isUser, authControler.getUsers);
 
 module.exports = router;

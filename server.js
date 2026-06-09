@@ -11,15 +11,22 @@ const authRoutes = require('./routes/auth');
 const videoRoutes = require('./routes/videoRoutes');
 
 const studentClass = require('./routes/studentClass');
+const cookieParser = require("cookie-parser");
 
 const app = express();
+
+app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:4200",
     "https://editorimageai.netlify.app"
   ],
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization"
+  ]
 }));
 
 app.use(bodyParser.json());
